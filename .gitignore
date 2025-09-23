@@ -2,3 +2,7 @@
 # model weights
 *.pt
 models/
+
+# model weights
+*.pt
+models/
