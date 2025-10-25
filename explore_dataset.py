@@ -96,15 +96,19 @@ for dirpath, _, filenames in os.walk(split_path_for_grid):
 # COUNTS BY SPLIT AND CLASS
 # =========================
 
+# For each split, list classes and count images per class
 for split in ["train", "test", "valid"]:
     split_path = os.path.join(ROOT, split)
     print(f"\n📂 {split.upper()} SET")
+    # Check if the split folder exists
     if not os.path.isdir(split_path):
         print("  (missing)")
         continue
 
+        # List classes and count images per class
     classes = list_classes(split_path)
     total = 0
+    # For each class, count images
     for cls in classes:
         cls_path = os.path.join(split_path, cls)
         n = count_files_recursive(cls_path)
@@ -127,6 +131,7 @@ fig, axes = plt.subplots(rows, cols, figsize=(12, 3 * rows))
 if rows == 1:
     axes = [axes]
 
+# For each class, pick some random images and plot them in a row
 for r, cls in enumerate(classes_for_grid):
     cls_dir = os.path.join(split_path_for_grid, cls)
     files = files_recursive(cls_dir)
@@ -144,14 +149,20 @@ for r, cls in enumerate(classes_for_grid):
     picks = random.sample(files, min(SAMPLES, len(files)))
     picks += [None] * (SAMPLES - len(picks))
 
+    #` Plot the picks in the grid
     for c, path in enumerate(picks):
+        # Select the correct axis (subplot)
         ax = axes[r][c] if rows > 1 else axes[c]
+        # Show the image, or a placeholder if None
         if path is None:
             ax.axis("off")
             continue
         img = mpimg.imread(path)
+        #  Grayscale images look better with a gray colormap
         ax.imshow(img, cmap="gray")
+        # Only label the first column of each row
         ax.set_title(short_label(cls) if c == 0 else "", fontsize=10)
+        # No axis ticks or labels
         ax.axis("off")
 
 plt.suptitle(f"{SAMPLES} random samples per class ({SPLIT.upper()} set)", fontsize=16)

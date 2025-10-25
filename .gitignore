@@ -6,3 +6,22 @@ models/
 # model weights
 *.pt
 models/
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+exports/
+npy_outputs/
+checkpoints/
+data/
+*.npy
+*.pt
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+/exports/
+/npy_outputs/
+/checkpoints/
